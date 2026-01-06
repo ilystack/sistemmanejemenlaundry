@@ -122,24 +122,17 @@ class OrderController extends Controller
                     'token' => $paymentToken
                 ]);
 
-                // Generate QR Code
-                $qrCodeFileName = 'qr_order_' . $order->id . '_' . time() . '.svg';
-                $qrCodePath = 'qrcodes/' . $qrCodeFileName;
-                $fullPath = storage_path('app/public/' . $qrCodePath);
-
-                // Create directory if not exists
-                if (!file_exists(dirname($fullPath))) {
-                    mkdir(dirname($fullPath), 0755, true);
-                }
-
-                // Generate QR Code using SimpleSoftwareIO (SVG format)
-                \SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')
+                // Generate QR Code as String (Serverless Friendly)
+                // We use Base64 Data URI to display directly in frontend without saving file
+                $qrContent = \SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')
                     ->size(300)
                     ->margin(2)
-                    ->generate($paymentUrl, $fullPath);
+                    ->generate($paymentUrl);
 
-                // Update order with QR path
-                $order->update(['qr_code_path' => $qrCodePath]);
+                $qrCodeDataUri = 'data:image/svg+xml;base64,' . base64_encode($qrContent);
+
+                // We don't save path to DB anymore since it's ephemeral
+                // $order->update(['qr_code_path' => ...]); 
             }
 
             // Log activity
@@ -162,7 +155,7 @@ class OrderController extends Controller
                     'success' => true,
                     'message' => 'Order berhasil dibuat. Silakan scan QR Code untuk pembayaran.',
                     'order_id' => $order->id,
-                    'qr_code_url' => asset('storage/' . $qrCodePath),
+                    'qr_code_url' => $qrCodeDataUri, // Changed from file URL to Data URI
                     'payment_url' => $paymentUrl, // Tambahkan ini
                     'payment_amount' => $request->metode_pembayaran === 'qris'
                         ? $request->total_harga

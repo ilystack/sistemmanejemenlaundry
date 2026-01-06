@@ -19,10 +19,10 @@
                 try {
                     const notificationSound = new Audio('https://res.cloudinary.com/ds8pgw1pf/video/upload/v1728571480/penguinui/component-assets/sounds/ding.mp3');
                     notificationSound.play().catch((error) => {
-                        console.log('Sound autoplay blocked by browser');
+
                     });
                 } catch (error) {
-                    console.log('Sound not available');
+
                 }
             }
         },
@@ -37,7 +37,8 @@
         variant: $event.detail.variant, 
         title: $event.detail.title, 
         message: $event.detail.message 
-    })" class="fixed top-4 right-4 z-[9999] space-y-3 max-w-sm w-full pointer-events-none">
+    })"
+    class="fixed top-4 left-0 right-0 sm:left-auto sm:right-4 z-[9999] space-y-3 px-4 sm:px-0 w-full sm:w-96 pointer-events-none">
     <div x-on:mouseenter="$dispatch('pause-auto-dismiss')" x-on:mouseleave="$dispatch('resume-auto-dismiss')"
         class="space-y-3">
         <template x-for="notification in notifications" :key="notification.id">
@@ -232,7 +233,7 @@
                         }
                     }));
                 @endif
-                }, 300);
+                        }, 300);
         });
     </script>
 @endif

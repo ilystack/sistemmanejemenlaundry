@@ -379,22 +379,9 @@
 
                 <div
                     class="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
-                    <p class="text-sm text-amber-800 dark:text-amber-300">
+                    <p class="text-sm text-center text-amber-800 dark:text-amber-300">
                         ⏰ QR Code berlaku selama <span class="font-bold">10 menit</span>
                     </p>
-                    <p class="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                        Scan QR Code di atas, atau klik link di bawah ini jika menggunakan device yang sama.
-                    </p>
-
-                    {{-- Tombol Link Direct untuk HP --}}
-                    <a :href="paymentUrl" target="_blank"
-                        class="mt-3 block w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-sm transition">
-                        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>
-                        Bayar Sekarang
-                    </a>
                 </div>
             </div>
         </div>
@@ -475,10 +462,42 @@
 
             async fetchPakets() {
                 try {
-                    const response = await fetch('/api/pakets');
-                    this.pakets = await response.json();
+                    const response = await fetch('/ajax/pakets', {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    let rawPakets = [];
+                    if (Array.isArray(data)) {
+                        rawPakets = data;
+                    } else if (data.data && Array.isArray(data.data)) {
+                        rawPakets = data.data;
+                    } else if (typeof data === 'object') {
+                        rawPakets = Object.values(data).filter(item => typeof item === 'object');
+                    }
+
+                    this.pakets = rawPakets.map(p => ({
+                        ...p,
+                        id: Number(p.id),
+                        harga: Number(p.harga),
+                        satuan: p.satuan || '',
+                        jenis_layanan: p.jenis_layanan || ''
+                    }));
+
+                    if (this.pakets.length === 0) {
+                        // Optional: Handle empty state
+                    }
+
                 } catch (error) {
-                    console.error('Error fetching pakets:', error);
+                    alert('Gagal memuat data paket: ' + error.message);
                 }
             },
 
@@ -609,7 +628,7 @@
                     this.longitude = position.coords.longitude;
 
                     // Hitung jarak ke laundry
-                    const response = await fetch('/api/calculate-distance', {
+                    const response = await fetch('/ajax/calculate-distance', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

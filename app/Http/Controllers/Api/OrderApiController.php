@@ -10,18 +10,12 @@ use Illuminate\Http\Request;
 
 class OrderApiController extends Controller
 {
-    /**
-     * Get all pakets
-     */
     public function getPakets()
     {
         $pakets = Paket::all();
         return response()->json($pakets);
     }
 
-    /**
-     * Calculate distance from customer to laundry
-     */
     public function calculateDistance(Request $request)
     {
         $request->validate([
@@ -29,7 +23,6 @@ class OrderApiController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        // Get admin's laundry coordinates
         $admin = User::where('role', 'admin')->first();
 
         if (!$admin || !$admin->latitude || !$admin->longitude) {
@@ -39,7 +32,6 @@ class OrderApiController extends Controller
             ], 400);
         }
 
-        // Calculate distance using Haversine
         $distance = DistanceCalculator::haversine(
             $request->latitude,
             $request->longitude,
@@ -47,7 +39,6 @@ class OrderApiController extends Controller
             $admin->longitude
         );
 
-        // Calculate delivery fee
         $fee = DistanceCalculator::calculateDeliveryFee($distance);
 
         return response()->json([

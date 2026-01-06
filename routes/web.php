@@ -11,27 +11,7 @@ Route::get('/', function () {
     return view('welcome', compact('paketKg', 'paketPcs', 'testimonials'));
 });
 
-// DEBUG ROUTE - HAPUS NANTI
-Route::get('/debug-db', function () {
-    try {
-        \Illuminate\Support\Facades\DB::connection()->getPdo();
-        $dbName = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
-        $paketCount = \App\Models\Paket::count();
-        $pakets = \App\Models\Paket::all(); // Show all packets
 
-        return response()->json([
-            'status' => 'Connected!',
-            'database' => $dbName,
-            'paket_count' => $paketCount,
-            'pakets' => $pakets
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'Error',
-            'message' => $e->getMessage()
-        ], 500);
-    }
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -75,8 +55,7 @@ Route::middleware(['auth', 'role:karyawan'])->group(function () {
     Route::post('/absensi/store', [App\Http\Controllers\AbsensiController::class, 'storeAbsensi'])->name('absensi.storeModal');
 });
 
-// API Routes (for order form)
-Route::prefix('api')->middleware('auth')->group(function () {
+Route::prefix('ajax')->middleware('auth')->group(function () {
     Route::get('/pakets', [App\Http\Controllers\Api\OrderApiController::class, 'getPakets']);
     Route::post('/calculate-distance', [App\Http\Controllers\Api\OrderApiController::class, 'calculateDistance']);
 });

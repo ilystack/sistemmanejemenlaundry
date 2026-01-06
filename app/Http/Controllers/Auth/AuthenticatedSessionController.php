@@ -33,6 +33,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Invalidate other sessions (Single Device Login)
+        Auth::logoutOtherDevices($request->password);
+
         $user = Auth::user();
 
         // Get the role from route parameter

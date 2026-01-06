@@ -166,7 +166,7 @@
                         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
                     ]);
                     modelsLoaded = true;
-                    console.log('Face detection models loaded');
+
                 } catch (error) {
                     console.error('Error loading models:', error);
                     showToast('Gagal memuat model deteksi wajah', 'error');
