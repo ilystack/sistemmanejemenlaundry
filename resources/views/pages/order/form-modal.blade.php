@@ -25,14 +25,22 @@
                 <button type="button" @click="selectTipePaket('kg')"
                     class="p-6 border-2 rounded-xl transition-all hover:shadow-lg"
                     :class="tipePaket === 'kg' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'">
-                    <div class="text-4xl mb-2">⚖️</div>
+                    <svg class="w-12 h-12 mx-auto mb-2 text-blue-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                    </svg>
                     <h4 class="font-bold text-gray-900 dark:text-white">Kilogram (KG)</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Cuci per kilogram</p>
                 </button>
                 <button type="button" @click="selectTipePaket('pcs')"
                     class="p-6 border-2 rounded-xl transition-all hover:shadow-lg"
                     :class="tipePaket === 'pcs' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'">
-                    <div class="text-4xl mb-2">🧺</div>
+                    <svg class="w-12 h-12 mx-auto mb-2 text-blue-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
                     <h4 class="font-bold text-gray-900 dark:text-white">Pieces (PCS)</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Cuci per item</p>
                 </button>
@@ -52,17 +60,28 @@
                     <button type="button" @click="selectJenisLayanan('cuci_saja')"
                         class="p-3 text-sm border rounded-lg transition-all text-center hover:bg-gray-50 dark:hover:bg-gray-700"
                         :class="jenisLayanan === 'cuci_saja' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-700 font-bold' : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300'">
-                        🧴 Cuci Saja
+                        <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M9 3v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5V3H9zm3 12c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+                        </svg>
+                        Cuci Saja
                     </button>
                     <button type="button" @click="selectJenisLayanan('cuci_setrika')"
                         class="p-3 text-sm border rounded-lg transition-all text-center hover:bg-gray-50 dark:hover:bg-gray-700"
                         :class="jenisLayanan === 'cuci_setrika' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-700 font-bold' : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300'">
-                        👕 Cuci + Setrika
+                        <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M16 21v-2l-8-5V3.5c0-.83.67-1.5 1.5-1.5S11 2.67 11 3.5V11h2V3.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V14l-8 5v2h16v-2h-8z" />
+                        </svg>
+                        Cuci + Setrika
                     </button>
                     <button type="button" @click="selectJenisLayanan('kilat')"
                         class="p-3 text-sm border rounded-lg transition-all text-center hover:bg-gray-50 dark:hover:bg-gray-700"
                         :class="jenisLayanan === 'kilat' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-700 font-bold' : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300'">
-                        ⚡ Kilat
+                        <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M7 2v11h3v9l7-12h-4l4-8z" />
+                        </svg>
+                        Kilat
                     </button>
                 </div>
             </div>
@@ -161,7 +180,13 @@
             <div x-show="tipePaket === 'pcs' && cartTotal > 0" x-transition
                 class="mt-4 pt-4 border-t-2 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="font-semibold text-gray-700 dark:text-gray-300">🛒 Total Item:</span>
+                    <span class="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+                        </svg>
+                        Total Item:
+                    </span>
                     <span class="font-bold text-gray-900 dark:text-white" x-text="cartItemCount + ' item'"></span>
                 </div>
                 <div class="flex justify-between items-center">
@@ -179,14 +204,22 @@
                 <button type="button" @click="selectMetodePengantaran('antar_sendiri')"
                     class="p-6 border-2 rounded-xl transition-all hover:shadow-lg"
                     :class="metodePengantaran === 'antar_sendiri' ? 'border-green-600 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-700'">
-                    <div class="text-4xl mb-2">🚶</div>
+                    <svg class="w-12 h-12 mx-auto mb-2 text-green-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
                     <h4 class="font-bold text-gray-900 dark:text-white">Antar Sendiri</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Gratis</p>
                 </button>
                 <button type="button" @click="selectMetodePengantaran('dijemput')"
                     class="p-6 border-2 rounded-xl transition-all hover:shadow-lg"
                     :class="metodePengantaran === 'dijemput' ? 'border-green-600 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-700'">
-                    <div class="text-4xl mb-2">🚗</div>
+                    <svg class="w-12 h-12 mx-auto mb-2 text-green-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                     <h4 class="font-bold text-gray-900 dark:text-white">Dijemput</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Rp 1.000/km</p>
                 </button>
@@ -202,8 +235,20 @@
                     </div>
                     <button type="button" @click="getLocation()" :disabled="gettingLocation"
                         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white text-sm font-semibold rounded-lg transition">
-                        <span x-show="!gettingLocation">📍 Ambil Lokasi</span>
-                        <span x-show="gettingLocation">⏳ Mengambil...</span>
+                        <span x-show="!gettingLocation" class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            </svg>
+                            Ambil Lokasi
+                        </span>
+                        <span x-show="gettingLocation" class="flex items-center gap-1">
+                            <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Mengambil...
+                        </span>
                     </button>
                 </div>
                 <div x-show="jarak > 0" x-transition class="text-sm">
@@ -223,14 +268,22 @@
                 <button type="button" @click="metodePembayaran = 'cash'"
                     class="p-6 border-2 rounded-xl transition-all hover:shadow-lg"
                     :class="metodePembayaran === 'cash' ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20' : 'border-gray-200 dark:border-gray-700'">
-                    <div class="text-4xl mb-2">💵</div>
+                    <svg class="w-12 h-12 mx-auto mb-2 text-purple-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
                     <h4 class="font-bold text-gray-900 dark:text-white">Cash</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Bayar di tempat</p>
                 </button>
                 <button type="button" @click="metodePembayaran = 'qris'"
                     class="p-6 border-2 rounded-xl transition-all hover:shadow-lg"
                     :class="metodePembayaran === 'qris' ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20' : 'border-gray-200 dark:border-gray-700'">
-                    <div class="text-4xl mb-2">📱</div>
+                    <svg class="w-12 h-12 mx-auto mb-2 text-purple-600" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                    </svg>
                     <h4 class="font-bold text-gray-900 dark:text-white">QRIS</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Scan QR Code</p>
                 </button>
@@ -304,7 +357,10 @@
                     </div>
                     <div x-show="metodePembayaran === 'cash' && metodePengantaran === 'dijemput'"
                         class="text-xs text-amber-600 dark:text-amber-400 pt-2">
-                        ⚠️ Bayar ongkir dulu (DP): <span class="font-bold"
+                        <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                        </svg>
+                        Bayar ongkir dulu (DP): <span class="font-bold"
                             x-text="'Rp ' + ongkir.toLocaleString('id-ID')"></span>
                     </div>
                 </div>
@@ -333,7 +389,11 @@
                     {{-- Tombol Link Direct untuk HP --}}
                     <a :href="paymentUrl" target="_blank"
                         class="mt-3 block w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-sm transition">
-                        🔗 Bayar Sekarang
+                        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                        Bayar Sekarang
                     </a>
                 </div>
             </div>
@@ -352,13 +412,36 @@
             </button>
             <button type="button" @click="submitOrder()" x-show="step === 4 && !needsPayment()" :disabled="isSubmitting"
                 class="px-6 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:bg-gray-400 rounded-lg transition shadow-md hover:shadow-lg">
-                <span x-show="!isSubmitting">✓ Buat Order</span>
-                <span x-show="isSubmitting">⏳ Memproses...</span>
+                <span x-show="!isSubmitting" class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Buat Order
+                </span>
+                <span x-show="isSubmitting" class="flex items-center gap-1">
+                    <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Memproses...
+                </span>
             </button>
             <button type="button" @click="submitOrder()" x-show="step === 4 && needsPayment()" :disabled="isSubmitting"
                 class="px-6 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 rounded-lg transition shadow-md hover:shadow-lg">
-                <span x-show="!isSubmitting">💳 Lanjut Bayar</span>
-                <span x-show="isSubmitting">⏳ Memproses...</span>
+                <span x-show="!isSubmitting" class="flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    Lanjut Bayar
+                </span>
+                <span x-show="isSubmitting" class="flex items-center gap-1">
+                    <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Memproses...
+                </span>
             </button>
         </div>
     </form>

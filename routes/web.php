@@ -11,6 +11,28 @@ Route::get('/', function () {
     return view('welcome', compact('paketKg', 'paketPcs', 'testimonials'));
 });
 
+// DEBUG ROUTE - HAPUS NANTI
+Route::get('/debug-db', function () {
+    try {
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbName = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
+        $paketCount = \App\Models\Paket::count();
+        $pakets = \App\Models\Paket::all(); // Show all packets
+
+        return response()->json([
+            'status' => 'Connected!',
+            'database' => $dbName,
+            'paket_count' => $paketCount,
+            'pakets' => $pakets
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'Error',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
