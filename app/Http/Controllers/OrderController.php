@@ -11,7 +11,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = \App\Models\Order::with(['user', 'paket'])->latest()->paginate(10);
+        $orders = \App\Models\Order::with(['user', 'paket', 'items'])->latest()->paginate(10);
         return view('pages.order.index', compact('orders'));
     }
 
@@ -184,7 +184,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $order = \App\Models\Order::with(['user', 'paket', 'items.paket'])->findOrFail($id);
+            return response()->json($order);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Order tidak ditemukan'], 404);
+        }
     }
 
     /**
@@ -209,5 +214,39 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, string $id)
+    {
+        $request->validate([
+            'status' => 'required|in:menunggu,diproses,selesai,diambil,batal'
+        ]);
+
+        try {
+            $order = \App\Models\Order::findOrFail($id);
+            $oldStatus = $order->status;
+            $newStatus = $request->status;
+
+            $order->update(['status' => $newStatus]);
+
+            // Log activity
+            \App\Helpers\ActivityLogger::log(
+                'order',
+                'update',
+                "Mengubah status order #{$order->antrian} dari {$oldStatus} menjadi {$newStatus}",
+                $order->id
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status order berhasil diperbarui'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal update status: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

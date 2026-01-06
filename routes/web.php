@@ -66,6 +66,7 @@ Route::get('/payment/confirm/{order}/{token}', [App\Http\Controllers\PaymentCont
 // Shared Routes (accessible by both admin and karyawan)
 Route::middleware(['auth'])->group(function () {
     Route::resource('order', App\Http\Controllers\OrderController::class);
+    Route::patch('/order/{order}/status', [App\Http\Controllers\OrderController::class, 'updateStatus'])->name('order.update.status');
     Route::resource('paket', App\Http\Controllers\PaketController::class);
     Route::resource('customer', App\Http\Controllers\CustomerController::class);
     Route::resource('karyawan', App\Http\Controllers\KaryawanController::class);

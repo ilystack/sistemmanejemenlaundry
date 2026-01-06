@@ -5,12 +5,16 @@
         selectedOrder: null,
         async openDetailModal(orderId) {
             try {
+                if (typeof window.showLoading === 'function') window.showLoading();
+                
                 const response = await fetch('/order/' + orderId);
                 this.selectedOrder = await response.json();
                 this.showDetailModal = true;
             } catch (error) {
                 console.error('Error:', error);
                 alert('Gagal memuat detail order');
+            } finally {
+                if (typeof window.hideLoading === 'function') window.hideLoading();
             }
         },
         updateOrderStatus(newStatus) {
@@ -116,9 +120,14 @@
                                 </td>
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-sm {{ $order->status === 'selesai' ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white' }}">
-                                    {{ $order->paket->nama }}
-                                    <span class="text-xs text-gray-500 block">{{ $order->jumlah }}
-                                        {{ $order->paket->satuan }}</span>
+                                    @if($order->tipe_paket === 'pcs')
+                                        Paket Satuan
+                                        <span class="text-xs text-gray-500 block">{{ $order->items->count() }} Item</span>
+                                    @else
+                                        {{ $order->paket->nama ?? 'Paket Tidak Ditemukan' }}
+                                        <span class="text-xs text-gray-500 block">{{ $order->jumlah }}
+                                            {{ $order->paket->satuan ?? 'kg' }}</span>
+                                    @endif
                                 </td>
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-sm font-medium {{ $order->status === 'selesai' ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white' }}">

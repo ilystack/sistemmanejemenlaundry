@@ -126,7 +126,23 @@
     </style>
 </head>
 
-<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen flex items-center justify-center p-4 sm:p-6">
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen flex items-center justify-center p-4 sm:p-6"
+    x-data="{ showInfoModal: false }">
+
+    <!-- Info Button -->
+    <button @click="showInfoModal = true"
+        class="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-300 group">
+        <div class="relative">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span
+                class="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                Info Akun Demo
+            </span>
+        </div>
+    </button>
 
     <div class="w-full max-w-4xl">
         <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 md:p-12">
@@ -198,6 +214,104 @@
                 </svg>
                 Kembali ke Home
             </a>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div x-show="showInfoModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto"
+        aria-labelledby="modal-title" role="dialog" aria-modal="true">
+
+        <!-- Backdrop -->
+        <div x-show="showInfoModal" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" @click="showInfoModal = false">
+        </div>
+
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div x-show="showInfoModal" x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+
+                <div class="bg-blue-600 px-6 py-4 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Akun Demo Responden
+                    </h3>
+                    <button @click="showInfoModal = false" class="text-white/80 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 text-sm">
+                        Silakan gunakan akun berikut untuk akses sistem:
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span
+                                    class="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded uppercase">Admin</span>
+                                <span class="text-sm text-gray-500">(Pemilik Laundry)</span>
+                            </div>
+                            <div class="grid grid-cols-[60px_1fr] gap-2 text-sm">
+                                <span class="text-gray-500">Email:</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">admin@admin.com</span>
+                                <span class="text-gray-500">Pass:</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">password</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span
+                                    class="bg-gray-600 text-white text-xs font-bold px-2 py-0.5 rounded uppercase">Karyawan</span>
+                                <span class="text-sm text-gray-500">(Operasional Harian)</span>
+                            </div>
+                            <div class="grid grid-cols-[60px_1fr] gap-2 text-sm">
+                                <span class="text-gray-500">Email:</span>
+                                <span
+                                    class="font-mono font-medium text-gray-900 select-all">karyawan@karyawan.com</span>
+                                <span class="text-gray-500">Pass:</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">password</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 rounded-lg p-4 border border-green-100">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span
+                                    class="bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded uppercase">Customer</span>
+                                <span class="text-sm text-gray-500">(Pelanggan)</span>
+                            </div>
+                            <div class="grid grid-cols-[60px_1fr] gap-2 text-sm">
+                                <span class="text-gray-500">Email:</span>
+                                <span
+                                    class="font-mono font-medium text-gray-900 select-all">customer@customer.com</span>
+                                <span class="text-gray-500">Pass:</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">password</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button @click="showInfoModal = false"
+                            class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg transition-colors w-full sm:w-auto">
+                            Tutup Info
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

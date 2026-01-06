@@ -181,13 +181,7 @@
                 </div>
             </div>
 
-            {{-- Footer --}}
-            <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
-                <button @click="showDetailModal = false"
-                    class="w-full px-4 py-2.5 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-500 transition-all">
-                    Tutup
-                </button>
-            </div>
+
         </div>
     </div>
 </div>
