@@ -267,7 +267,7 @@
                             </div>
                             <div class="grid grid-cols-[60px_1fr] gap-2 text-sm">
                                 <span class="text-gray-500">Email:</span>
-                                <span class="font-mono font-medium text-gray-900 select-all">admin@admin.com</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">admin@mail.com</span>
                                 <span class="text-gray-500">Pass:</span>
                                 <span class="font-mono font-medium text-gray-900 select-all">password</span>
                             </div>
@@ -281,8 +281,7 @@
                             </div>
                             <div class="grid grid-cols-[60px_1fr] gap-2 text-sm">
                                 <span class="text-gray-500">Email:</span>
-                                <span
-                                    class="font-mono font-medium text-gray-900 select-all">karyawan@karyawan.com</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">karyawan@mail.com</span>
                                 <span class="text-gray-500">Pass:</span>
                                 <span class="font-mono font-medium text-gray-900 select-all">password</span>
                             </div>
@@ -296,8 +295,7 @@
                             </div>
                             <div class="grid grid-cols-[60px_1fr] gap-2 text-sm">
                                 <span class="text-gray-500">Email:</span>
-                                <span
-                                    class="font-mono font-medium text-gray-900 select-all">customer@customer.com</span>
+                                <span class="font-mono font-medium text-gray-900 select-all">customer@mail.com</span>
                                 <span class="text-gray-500">Pass:</span>
                                 <span class="font-mono font-medium text-gray-900 select-all">password</span>
                             </div>
