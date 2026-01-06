@@ -85,18 +85,23 @@
                                     #{{ $order->antrian }} - {{ $order->user->name }}
                                 </p>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    {{ $order->paket->nama }} ({{ $order->jumlah }} {{ $order->paket->satuan }})
+                                    @if($order->tipe_paket === 'pcs')
+                                        Paket Satuan ({{ $order->items->count() ?? 0 }} Item)
+                                    @else
+                                        {{ $order->paket->nama ?? 'Paket Dihapus' }} ({{ $order->jumlah }}
+                                        {{ $order->paket->satuan ?? 'kg' }})
+                                    @endif
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-500 mt-1">
                                     {{ $order->created_at->diffForHumans() }}
                                 </p>
                             </div>
                             <span class="px-3 py-1 text-xs font-semibold rounded-full
-                                                        @if($order->status === 'menunggu') bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400
-                                                        @elseif($order->status === 'diproses') bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400
-                                                        @elseif($order->status === 'selesai') bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400
-                                                        @else bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400
-                                                        @endif">
+                                                            @if($order->status === 'menunggu') bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400
+                                                            @elseif($order->status === 'diproses') bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400
+                                                            @elseif($order->status === 'selesai') bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400
+                                                            @else bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400
+                                                            @endif">
                                 {{ ucfirst($order->status) }}
                             </span>
                         </div>

@@ -37,7 +37,7 @@ class DashboardController extends Controller
                 ->count(),
         ];
 
-        $orders = \App\Models\Order::with(['user', 'paket'])
+        $orders = \App\Models\Order::with(['user', 'paket', 'items'])
             ->latest()
             ->take(5)
             ->get();

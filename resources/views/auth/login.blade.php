@@ -137,25 +137,37 @@
                                         }
                                     }));
                                 @endforeach
-                                                        });
+                                                            });
                         </script>
                     @endif
 
                     <form method="POST" action="/login/{{ $role ?? 'admin' }}" class="space-y-6">
                         @csrf
 
-                        <div class="space-y-2">
+                        <div class="relative">
                             <input type="email" id="email" name="email"
-                                class="w-full px-4 py-3.5 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 text-base focus:outline-none focus:border-blue-400 transition-all duration-300"
+                                class="peer w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-900 text-base focus:outline-none focus:border-blue-500 transition-all duration-300 placeholder-transparent"
                                 placeholder="Email" required>
+                            <label for="email"
+                                class="absolute left-3 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all duration-300
+                                peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4
+                                peer-focus:-top-2.5 peer-focus:left-3 peer-focus:text-sm peer-focus:text-blue-500 peer-focus:bg-white peer-focus:px-2 pointer-events-none">
+                                Email
+                            </label>
                         </div>
 
-                        <div class="space-y-2 relative">
+                        <div class="relative">
                             <input type="password" id="password" name="password"
-                                class="w-full px-4 py-3.5 pr-12 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 text-base focus:outline-none focus:border-blue-400 transition-all duration-300"
+                                class="peer w-full px-4 py-3 pr-12 bg-white border-2 border-gray-300 rounded-lg text-gray-900 text-base focus:outline-none focus:border-blue-500 transition-all duration-300 placeholder-transparent"
                                 placeholder="Password" required>
-                            <button type="button" onclick="togglePassword()"
-                                class="absolute right-4 top-2 text-gray-500 hover:text-gray-700 focus:outline-none transition-colors duration-200">
+                            <label for="password"
+                                class="absolute left-3 -top-2.5 bg-white px-2 text-sm text-gray-600 transition-all duration-300
+                                peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:left-4
+                                peer-focus:-top-2.5 peer-focus:left-3 peer-focus:text-sm peer-focus:text-blue-500 peer-focus:bg-white peer-focus:px-2 pointer-events-none">
+                                Password
+                            </label>
+                            <button type="button" onclick="togglePassword()" id="toggle-password-btn"
+                                class="hidden absolute right-4 top-3.5 text-gray-500 hover:text-gray-700 focus:outline-none transition-colors duration-200 z-10">
                                 <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -164,7 +176,7 @@
                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                                 <svg id="eye-slash-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                                    viewBox="0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                                 </svg>
@@ -274,6 +286,23 @@
                         showLoading();
                     }
                 });
+            }
+
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.getElementById('toggle-password-btn');
+
+            if (passwordInput && toggleBtn) {
+                const updateToggleVisibility = () => {
+                    if (passwordInput.value.length > 0) {
+                        toggleBtn.classList.remove('hidden');
+                    } else {
+                        toggleBtn.classList.add('hidden');
+                    }
+                };
+
+                passwordInput.addEventListener('input', updateToggleVisibility);
+
+                setTimeout(updateToggleVisibility, 100);
             }
         });
 
