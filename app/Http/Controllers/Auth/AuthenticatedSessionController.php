@@ -33,15 +33,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Invalidate other sessions (Single Device Login)
-        Auth::logoutOtherDevices($request->password);
+        if (env('SINGLE_DEVICE_LOGIN', false)) {
+            Auth::logoutOtherDevices($request->password);
+        }
 
         $user = Auth::user();
 
-        // Get the role from route parameter
         $loginRole = $request->route('role');
 
-        // Validate if user's role matches the login form role
         if ($loginRole && $user->role !== $loginRole) {
             Auth::logout();
             $request->session()->invalidate();
@@ -52,16 +51,7 @@ class AuthenticatedSessionController extends Controller
             ])->onlyInput('email');
         }
 
-        // Log login activity
         ActivityLogger::logAuth('login', $user->name);
-
-        // Cek apakah role user sesuai dengan role login yang dipilih (opsional, tapi bagus untuk security)
-        // Kalau mau strict:
-        // $loginRole = $request->route('role');
-        // if ($loginRole && $user->role !== $loginRole) {
-        //    Auth::logout();
-        //    return redirect()->route('login.' . $loginRole)->withErrors(['email' => 'Akun ini tidak terdaftar sebagai ' . $loginRole]);
-        // }
 
         if ($user->role === 'admin') {
             return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang, ' . $user->name . '!');
