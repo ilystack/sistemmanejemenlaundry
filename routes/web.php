@@ -1,91 +1,102 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\Api\OrderApiController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JamKerjaController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaketController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\UserController;
+use App\Models\Paket;
+use App\Models\Testimonial;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $paketKg = \App\Models\Paket::where('satuan', 'kg')->get();
-    $paketPcs = \App\Models\Paket::where('satuan', 'pcs')->get();
-    $testimonials = \App\Models\Testimonial::where('is_approved', true)->latest()->take(6)->get();
+    $paketKg = Paket::where('satuan', 'kg')->get();
+    $paketPcs = Paket::where('satuan', 'pcs')->get();
+    $testimonials = Testimonial::where('is_approved', true)->latest()->take(6)->get();
 
     return view('welcome', compact('paketKg', 'paketPcs', 'testimonials'));
 });
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Customer Routes
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'customerDashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'customerDashboard'])->name('dashboard');
 });
 
-// Testimonial Routes (for customers)
 Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::post('/testimonial', [App\Http\Controllers\TestimonialController::class, 'store'])->name('testimonial.store');
+    Route::post('/testimonial', [TestimonialController::class, 'store'])->name('testimonial.store');
 });
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Settings route for admin
     Route::post('/settings', [ProfileController::class, 'updateSettings'])->name('settings.update');
 });
 
-// Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'adminDashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('dashboard');
 });
 
-// Karyawan Routes
 Route::middleware(['auth', 'role:karyawan'])->prefix('karyawan')->name('karyawan.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'karyawanDashboard'])->name('dashboard');
-    Route::get('/absensi', [App\Http\Controllers\AbsensiController::class, 'karyawanIndex'])->name('absensi');
-    Route::get('/absensi/data', [App\Http\Controllers\AbsensiController::class, 'getAttendanceData'])->name('absensi.data');
-    Route::post('/absensi', [App\Http\Controllers\AbsensiController::class, 'store'])->name('absensi.store');
+    Route::get('/dashboard', [DashboardController::class, 'karyawanDashboard'])->name('dashboard');
+    Route::get('/absensi', [AbsensiController::class, 'karyawanIndex'])->name('absensi');
+    Route::get('/absensi/data', [AbsensiController::class, 'getAttendanceData'])->name('absensi.data');
+    Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.store');
 });
 
-// Absensi Modal Routes (for karyawan only)
 Route::middleware(['auth', 'role:karyawan'])->group(function () {
-    Route::get('/absensi/check', [App\Http\Controllers\AbsensiController::class, 'check'])->name('absensi.check');
-    Route::post('/absensi/store', [App\Http\Controllers\AbsensiController::class, 'storeAbsensi'])->name('absensi.storeModal');
+    Route::get('/absensi/check', [AbsensiController::class, 'check'])->name('absensi.check');
+    Route::post('/absensi/store', [AbsensiController::class, 'storeAbsensi'])->name('absensi.storeModal');
 });
 
 Route::prefix('ajax')->middleware('auth')->group(function () {
-    Route::get('/pakets', [App\Http\Controllers\Api\OrderApiController::class, 'getPakets']);
-    Route::post('/calculate-distance', [App\Http\Controllers\Api\OrderApiController::class, 'calculateDistance']);
+    Route::get('/pakets', [OrderApiController::class, 'getPakets']);
+    Route::post('/calculate-distance', [OrderApiController::class, 'calculateDistance']);
 });
 
-// Payment Confirmation Route (public - untuk QR scan)
-Route::get('/payment/confirm/{order}/{token}', [App\Http\Controllers\PaymentController::class, 'confirm'])->name('payment.confirm');
+Route::get('/payment/confirm/{order}/{token}', [PaymentController::class, 'confirm'])->name('payment.confirm');
 
-// Shared Routes (accessible by both admin and karyawan)
 Route::middleware(['auth'])->group(function () {
-    Route::resource('order', App\Http\Controllers\OrderController::class);
-    Route::patch('/order/{order}/status', [App\Http\Controllers\OrderController::class, 'updateStatus'])->name('order.update.status');
-    Route::resource('paket', App\Http\Controllers\PaketController::class);
+    Route::resource('order', OrderController::class);
+    Route::patch('/order/{order}/status', [OrderController::class, 'updateStatus'])->name('order.update.status');
+    Route::resource('paket', PaketController::class);
 
-    // User Management Routes (Customer & Karyawan)
     Route::prefix('user')->name('user.')->group(function () {
         // Customer routes
-        Route::get('/customer', [App\Http\Controllers\UserController::class, 'indexCustomer'])->name('customer.index');
-        Route::post('/customer', [App\Http\Controllers\UserController::class, 'storeCustomer'])->name('customer.store');
-        Route::delete('/customer/{id}', [App\Http\Controllers\UserController::class, 'destroyCustomer'])->name('customer.destroy');
+        Route::get('/customer', [UserController::class, 'indexCustomer'])->name('customer.index');
+        Route::post('/customer', [UserController::class, 'storeCustomer'])->name('customer.store');
+        Route::delete('/customer/{id}', [UserController::class, 'destroyCustomer'])->name('customer.destroy');
 
         // Karyawan routes
-        Route::get('/karyawan', [App\Http\Controllers\UserController::class, 'indexKaryawan'])->name('karyawan.index');
-        Route::post('/karyawan', [App\Http\Controllers\UserController::class, 'storeKaryawan'])->name('karyawan.store');
-        Route::delete('/karyawan/{id}', [App\Http\Controllers\UserController::class, 'destroyKaryawan'])->name('karyawan.destroy');
+        Route::get('/karyawan', [UserController::class, 'indexKaryawan'])->name('karyawan.index');
+        Route::post('/karyawan', [UserController::class, 'storeKaryawan'])->name('karyawan.store');
+        Route::delete('/karyawan/{id}', [UserController::class, 'destroyKaryawan'])->name('karyawan.destroy');
     });
 
-    Route::post('jam-kerja/{jam_kerja}/toggle', [App\Http\Controllers\JamKerjaController::class, 'toggle'])->name('jam-kerja.toggle');
-    Route::resource('jam-kerja', App\Http\Controllers\JamKerjaController::class);
-    Route::resource('absensi', App\Http\Controllers\AbsensiController::class);
-    Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+    Route::post('jam-kerja/{jam_kerja}/toggle', [JamKerjaController::class, 'toggle'])->name('jam-kerja.toggle');
+    Route::resource('jam-kerja', JamKerjaController::class);
+    Route::resource('absensi', AbsensiController::class);
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('/403', function () {
+    return view('errors.403'); });
+Route::get('/404', function () {
+    return view('errors.404'); });
+Route::get('/419', function () {
+    return view('errors.419'); });
+Route::get('/500', function () {
+    return view('errors.500'); });
+Route::get('/503', function () {
+    return view('errors.503'); });

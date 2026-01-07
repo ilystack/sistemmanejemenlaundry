@@ -213,7 +213,26 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = \App\Models\Order::findOrFail($id);
+
+        // Prevent deletion of orders that are being processed or completed
+        if (in_array($order->status, ['diproses', 'selesai', 'diambil'])) {
+            return redirect()->route('order.index')->with('error', 'Tidak dapat menghapus order yang sedang diproses atau sudah selesai!');
+        }
+
+        // Delete associated order items if exists
+        if ($order->tipe_paket === 'pcs') {
+            \App\Models\OrderItem::where('order_id', $order->id)->delete();
+        }
+
+        // Delete QR code file if exists
+        if ($order->qr_code_path && \Storage::exists($order->qr_code_path)) {
+            \Storage::delete($order->qr_code_path);
+        }
+
+        $order->delete();
+
+        return redirect()->route('order.index')->with('success', 'Order berhasil dihapus!');
     }
 
     public function updateStatus(Request $request, string $id)
