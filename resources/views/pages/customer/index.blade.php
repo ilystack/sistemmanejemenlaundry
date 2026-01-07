@@ -17,6 +17,14 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div
+                class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg">
+                {{ session('error') }}
+            </div>
+        @endif
+
+
         <div
             class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div class="overflow-x-auto">
@@ -73,7 +81,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <form action="{{ route('customer.destroy', $customer) }}" method="POST" class="inline">
+                                    <form action="{{ route('user.customer.destroy', $customer->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
@@ -148,7 +156,7 @@
                         </button>
                     </div>
 
-                    <form action="{{ route('customer.store') }}" method="POST" class="p-6 space-y-4">
+                    <form action="{{ route('user.customer.store') }}" method="POST" class="p-6 space-y-4">
                         @csrf
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama

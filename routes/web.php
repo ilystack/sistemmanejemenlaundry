@@ -68,8 +68,20 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('order', App\Http\Controllers\OrderController::class);
     Route::patch('/order/{order}/status', [App\Http\Controllers\OrderController::class, 'updateStatus'])->name('order.update.status');
     Route::resource('paket', App\Http\Controllers\PaketController::class);
-    Route::resource('customer', App\Http\Controllers\CustomerController::class);
-    Route::resource('karyawan', App\Http\Controllers\KaryawanController::class);
+
+    // User Management Routes (Customer & Karyawan)
+    Route::prefix('user')->name('user.')->group(function () {
+        // Customer routes
+        Route::get('/customer', [App\Http\Controllers\UserController::class, 'indexCustomer'])->name('customer.index');
+        Route::post('/customer', [App\Http\Controllers\UserController::class, 'storeCustomer'])->name('customer.store');
+        Route::delete('/customer/{id}', [App\Http\Controllers\UserController::class, 'destroyCustomer'])->name('customer.destroy');
+
+        // Karyawan routes
+        Route::get('/karyawan', [App\Http\Controllers\UserController::class, 'indexKaryawan'])->name('karyawan.index');
+        Route::post('/karyawan', [App\Http\Controllers\UserController::class, 'storeKaryawan'])->name('karyawan.store');
+        Route::delete('/karyawan/{id}', [App\Http\Controllers\UserController::class, 'destroyKaryawan'])->name('karyawan.destroy');
+    });
+
     Route::post('jam-kerja/{jam_kerja}/toggle', [App\Http\Controllers\JamKerjaController::class, 'toggle'])->name('jam-kerja.toggle');
     Route::resource('jam-kerja', App\Http\Controllers\JamKerjaController::class);
     Route::resource('absensi', App\Http\Controllers\AbsensiController::class);

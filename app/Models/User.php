@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
+        'address',
         'profile_photo',
         'laundry_logo',
     ];
@@ -72,5 +73,13 @@ class User extends Authenticatable
     public function isCustomer(): bool
     {
         return $this->role === 'customer';
+    }
+
+    /**
+     * Get the orders for the user
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
