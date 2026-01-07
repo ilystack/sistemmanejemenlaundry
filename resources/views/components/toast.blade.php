@@ -38,7 +38,7 @@
         title: $event.detail.title, 
         message: $event.detail.message 
     })"
-    class="fixed top-4 left-0 right-0 sm:left-auto sm:right-4 z-[9999] space-y-3 px-4 sm:px-0 w-full sm:w-96 pointer-events-none">
+    class="fixed top-4 left-4 right-4 sm:left-auto sm:right-4 z-[9999] space-y-3 w-auto sm:w-96 max-w-sm sm:max-w-md pointer-events-none">
     <div x-on:mouseenter="$dispatch('pause-auto-dismiss')" x-on:mouseleave="$dispatch('resume-auto-dismiss')"
         class="space-y-3">
         <template x-for="notification in notifications" :key="notification.id">
@@ -54,7 +54,7 @@
                         x-transition:leave="transition duration-300 ease-in"
                         x-transition:leave-end="translate-x-24 opacity-0"
                         x-transition:leave-start="translate-x-0 opacity-100"
-                        class="bg-green-50 border border-green-500 text-green-900 rounded-lg p-4 flex items-start justify-between gap-3">
+                        class="bg-green-50 border border-green-500 text-green-900 rounded-lg p-3 sm:p-4 flex items-start justify-between gap-2 sm:gap-3">
                         <div class="flex-1 min-w-0">
                             <h3 x-show="notification.title" class="text-sm font-semibold text-green-900"
                                 x-text="notification.title">
@@ -85,7 +85,7 @@
                         x-transition:leave="transition duration-300 ease-in"
                         x-transition:leave-end="translate-x-24 opacity-0"
                         x-transition:leave-start="translate-x-0 opacity-100"
-                        class="bg-red-50 border border-red-500 text-red-900 rounded-lg p-4 flex items-start justify-between gap-3">
+                        class="bg-red-50 border border-red-500 text-red-900 rounded-lg p-3 sm:p-4 flex items-start justify-between gap-2 sm:gap-3">
                         <div class="flex-1 min-w-0">
                             <h3 x-show="notification.title" class="text-sm font-semibold text-red-900"
                                 x-text="notification.title">
@@ -115,7 +115,7 @@
                         x-transition:leave="transition duration-300 ease-in"
                         x-transition:leave-end="translate-x-24 opacity-0"
                         x-transition:leave-start="translate-x-0 opacity-100"
-                        class="bg-amber-50 border border-amber-500 text-amber-900 rounded-lg p-4 flex items-start justify-between gap-3">
+                        class="bg-amber-50 border border-amber-500 text-amber-900 rounded-lg p-3 sm:p-4 flex items-start justify-between gap-2 sm:gap-3">
                         <div class="flex-1 min-w-0">
                             <h3 x-show="notification.title" class="text-sm font-semibold text-amber-900"
                                 x-text="notification.title">
@@ -146,7 +146,7 @@
                         x-transition:leave="transition duration-300 ease-in"
                         x-transition:leave-end="translate-x-24 opacity-0"
                         x-transition:leave-start="translate-x-0 opacity-100"
-                        class="bg-sky-50 border border-sky-500 text-sky-900 rounded-lg p-4 flex items-start justify-between gap-3">
+                        class="bg-sky-50 border border-sky-500 text-sky-900 rounded-lg p-3 sm:p-4 flex items-start justify-between gap-2 sm:gap-3">
                         <div class="flex-1 min-w-0">
                             <h3 x-show="notification.title" class="text-sm font-semibold text-sky-900"
                                 x-text="notification.title">
@@ -233,7 +233,7 @@
                         }
                     }));
                 @endif
-                        }, 300);
+                                }, 300);
         });
     </script>
 @endif

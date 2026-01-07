@@ -31,9 +31,9 @@
 
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-5xl w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20">
+    <div class="max-w-md w-full flex flex-col items-center justify-center gap-8 text-center">
         <!-- Laundry Art Illustration -->
-        <div class="w-48 h-48 md:w-64 md:h-64 relative">
+        <div class="w-48 h-48 md:w-56 md:h-56 relative">
             <svg class="w-full h-full" viewBox="0 0 200 200" fill="none">
                 <!-- Machine Body -->
                 <rect x="30" y="40" width="140" height="140" rx="10" fill="#E5E7EB" stroke="#3B82F6" stroke-width="3" />
@@ -53,12 +53,12 @@
         </div>
 
         <!-- Error Content -->
-        <div class="text-center md:text-left">
+        <div class="flex flex-col items-center">
             <!-- Error Code: Extra bold/black and tighter tracking -->
-            <h1 class="text-9xl font-black text-blue-600 mb-2 tracking-tighter drop-shadow-sm">404</h1>
+            <h1 class="text-8xl md:text-9xl font-black text-blue-600 mb-2 tracking-tighter drop-shadow-sm">404</h1>
 
             <!-- Subtitle -->
-            <p class="text-2xl font-extrabold text-gray-800 mb-8 uppercase tracking-wide">Page Not Found</p>
+            <p class="text-xl md:text-2xl font-extrabold text-gray-800 mb-8 uppercase tracking-wide">Page Not Found</p>
 
             <!-- Minimalist Back Button with Arrow -->
             <a href="javascript:history.back()"

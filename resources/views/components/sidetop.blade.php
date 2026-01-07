@@ -84,8 +84,8 @@
 
         @media (max-width: 640px) {
             #loadingOverlay dotlottie-wc {
-                width: 100px;
-                height: 100px;
+                width: 180px;
+                height: 180px;
             }
         }
     </style>
